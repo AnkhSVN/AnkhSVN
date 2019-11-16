@@ -242,6 +242,8 @@ namespace Ankh
             else if (context == null)
                 throw new ArgumentNullException("context");
 
+            //var t = typeof(Ankh.ExtensionPoints.IssueTracker.CommitArgs);
+
             object[] constructorArgs = null;
             foreach (Type type in assembly.GetTypes())
             {

@@ -30,6 +30,7 @@ using Ankh.Scc;
 using Ankh.Selection;
 using Ankh.UI;
 using Ankh.VS;
+using Microsoft.VisualStudio.Shell;
 
 namespace Ankh.Settings
 {
@@ -44,6 +45,8 @@ namespace Ankh.Settings
         public SolutionSettings(IAnkhServiceProvider context)
             : base(context)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             IVsShell shell = GetService<IVsShell>(typeof(SVsShell));
 
             if (shell == null)
@@ -516,6 +519,8 @@ namespace Ankh.Settings
         {
             get
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 if (_allProjectTypesFilter != null)
                     return _allProjectTypesFilter;
 
@@ -537,6 +542,8 @@ namespace Ankh.Settings
         {
             get
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 if (_projectFilterName != null)
                     return _projectFilterName;
 
@@ -557,6 +564,8 @@ namespace Ankh.Settings
         {
             get
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 IVsShell shell = GetService<IVsShell>(typeof(SVsShell));
 
                 if (shell != null)
@@ -580,6 +589,8 @@ namespace Ankh.Settings
         {
             get
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 IVsShell shell = GetService<IVsShell>(typeof(SVsShell));
 
                 if (shell != null)
@@ -750,6 +761,8 @@ namespace Ankh.Settings
                     return _solutionFilter;
 
                 _solutionFilter = "*.sln;*.dsw"; // Hardcoded default :(
+                
+                ThreadHelper.ThrowIfNotOnUIThread();
 
                 IVsSolution solution = GetService<IVsSolution>(typeof(SVsSolution));
 
@@ -772,11 +785,13 @@ namespace Ankh.Settings
 
         public void OpenProjectFile(string projectFile)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             OpenOrAddProjectFile(projectFile, false);
         }
 
         public void AddProjectFile(string projectFile)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             OpenOrAddProjectFile(projectFile, true);
         }
 
@@ -784,6 +799,7 @@ namespace Ankh.Settings
         {
             if (string.IsNullOrEmpty(projectFile))
                 throw new ArgumentNullException("projectFile");
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             string ext = Path.GetExtension(projectFile);
             bool isSolution = false;

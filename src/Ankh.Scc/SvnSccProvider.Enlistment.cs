@@ -479,6 +479,7 @@ namespace Ankh.Scc
                 return;
 
             IVsProjectFactory factory;
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             if (!VSErr.Succeeded(sol.GetProjectFactory(0, null, pszProjectMk, out factory)))
                 return;
 

@@ -24,6 +24,7 @@ using SharpSvn;
 using System.IO;
 using Ankh.Scc;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.Shell;
 
 namespace Ankh.Commands
 {
@@ -44,6 +45,8 @@ namespace Ankh.Commands
 
         public override void OnExecute(CommandEventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             Uri selectedUri = null;
             Uri rootUri = null;
 
@@ -254,6 +257,7 @@ namespace Ankh.Commands
 
         private static void OpenSolution(CommandEventArgs e, CheckoutProject dlg)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             IVsSolution2 sol = e.GetService<IVsSolution2>(typeof(SVsSolution));
 
             if (sol != null)

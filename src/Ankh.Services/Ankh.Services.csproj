@@ -61,15 +61,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\Ankh.VS.VersionThunk\Embed\Microsoft.VisualStudio.Shell.Embeddable.dll</HintPath>
     </Reference>
-    <Reference Include="SharpGit, Version=0.2401.1116.230, Culture=neutral, PublicKeyToken=bbd5cbe025856bdf, processorArchitecture=x86">
-      <HintPath>..\packages\SharpGit-x86.0.2401.1116.230\lib\net40\SharpGit.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpSvn, Version=1.9007.3987.251, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
-      <HintPath>..\packages\SharpSvn.1.9-x86.1.9007.3987.251\lib\net40\SharpSvn.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpSvn.UI, Version=1.9007.3987.251, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpSvn.1.9-x86.1.9007.3987.251\lib\net40\SharpSvn.UI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -279,6 +270,12 @@
     <Compile Include="VS\IProjectCommitSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="SharpGit-x86">
+      <Version>0.2401.1116.230</Version>
+    </PackageReference>
+    <PackageReference Include="SharpSvn.1.9-x86">
+      <Version>1.9007.3987.251</Version>
+    </PackageReference>
     <ProjectReference Include="..\Ankh.ExtensionPoints\Ankh.ExtensionPoints.csproj">
       <Project>{B7168874-E05E-458D-95CC-5D7BBC243986}</Project>
       <Name>Ankh.ExtensionPoints</Name>
@@ -299,20 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ankh.Services.wxs" />
-  </ItemGroup>
-  <ItemGroup>
-    <DependencyDownload Include="SSvn-1.9005.3940.224.zip">
-      <Url>https://sharpsvn.open.collab.net/files/documents/180/18649/</Url>
-      <TargetDir>..\autolib</TargetDir>
-      <Version>1</Version>
-      <Visible>false</Visible>
-    </DependencyDownload>
-    <DependencyDownload Include="SGit-0.2401.1116.230.zip">
-      <Url>https://sharpsvn.open.collab.net/files/documents/180/12884/</Url>
-      <TargetDir>..\autolib</TargetDir>
-      <Version>1</Version>
-      <Visible>false</Visible>
-    </DependencyDownload>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scc\PendingChangeText.resx">

@@ -102,6 +102,8 @@ namespace Ankh.VSPackage
 
         public int SaveSolutionProps(IVsHierarchy pHierarchy, IVsSolutionPersistence pPersistence)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             try
             {
                 int hr = VSErr.S_OK;
@@ -232,6 +234,8 @@ namespace Ankh.VSPackage
 
         public int LoadUserOptions(IVsSolutionPersistence pPersistence, uint grfLoadOpts)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             if ((grfLoadOpts & (uint)__VSLOADUSEROPTS.LUO_OPENEDDSW) != 0)
             {
                 return VSErr.S_OK; // We only know .suo; let's ignore old style projects
@@ -263,6 +267,8 @@ namespace Ankh.VSPackage
 
         public bool ForceLoadUserSettings(string streamName)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             IVsSolutionPersistence persistence = GetService<IVsSolutionPersistence>(typeof(SVsSolutionPersistence));
             if (persistence == null)
                 return false;
@@ -339,6 +345,8 @@ namespace Ankh.VSPackage
 
         public int SaveUserOptions([In] IVsSolutionPersistence pPersistence)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             try
             {
                 IAnkhSccService scc = GetService<IAnkhSccService>();

@@ -29,6 +29,7 @@ using Ankh.UI;
 using Ankh.VS;
 using Ankh.Configuration;
 using Ankh.Commands;
+using Microsoft.VisualStudio.Shell;
 
 namespace Ankh.Services
 {
@@ -115,6 +116,7 @@ namespace Ankh.Services
             }
             finally
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
                 if (!started)
                 {
                     if (monitor != null)
@@ -207,6 +209,8 @@ namespace Ankh.Services
             }
             finally
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 if (!started)
                 {
                     if (monitor != null)
@@ -275,6 +279,7 @@ namespace Ankh.Services
             }
             finally
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
                 if (!started)
                 {
                     if (monitor != null)
@@ -325,6 +330,8 @@ namespace Ankh.Services
                 else if (!SvnItem.IsValidPath(monitor))
                     throw new ArgumentOutOfRangeException("monitor");
 
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 _monitorDir = monitorDir;
                 _toMonitor = monitor;
 
@@ -367,6 +374,8 @@ namespace Ankh.Services
 
             public void Dispose()
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 if (_cookie != 0)
                 {
                     uint ck = _cookie;
@@ -410,6 +419,8 @@ namespace Ankh.Services
 
             void OnExited(object sender, EventArgs e)
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 Process process = sender as Process;
                 IAnkhCommandService cmd = GetService<IAnkhCommandService>();
 
@@ -452,6 +463,7 @@ namespace Ankh.Services
             {
                 if (rgpszFile == null)
                     return VSErr.E_POINTER;
+                ThreadHelper.ThrowIfNotOnUIThread();
 
                 foreach (string file in rgpszFile)
                 {
@@ -597,6 +609,8 @@ namespace Ankh.Services
 
             public string Replace(Match match)
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
                 string key;
                 string value;
                 bool vsStyle = true;
@@ -666,6 +680,7 @@ namespace Ankh.Services
             {
                 if (key == null)
                     throw new ArgumentNullException("key");
+                ThreadHelper.ThrowIfNotOnUIThread();
 
                 key = key.ToUpperInvariant();
                 value = null;

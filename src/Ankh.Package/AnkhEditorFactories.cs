@@ -24,6 +24,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using IOleServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
 using Ankh.UI;
+using Microsoft.VisualStudio.ProjectSystem;
 
 namespace Ankh.VSPackage
 {
@@ -163,6 +164,8 @@ namespace Ankh.VSPackage
                 pgrfCDW = 0;
                 return VSErr.E_UNEXPECTED;
             }
+
+            GetService<IProjectThreadingService>().VerifyOnUIThread();
 
             return base.CreateEditorInstance(grfCreateDoc, pszMkDocument, pszPhysicalView, pvHier, itemid, punkDocDataExisting, out ppunkDocView, out ppunkDocData, out pbstrEditorCaption, out pguidCmdUI, out pgrfCDW);
         }

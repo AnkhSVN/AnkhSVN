@@ -33,6 +33,8 @@ namespace Ankh.VSPackage
             if (_componentId != 0)
                 return;
 
+            //ProjectThreadingService.VerifyOnUIThread();
+
             IOleComponentManager mgr = GetService<IOleComponentManager>(typeof(SOleComponentManager));
 
             OLECRINFO[] crInfo = new OLECRINFO[1];

@@ -25,6 +25,7 @@ using Microsoft.Win32;
 
 using Ankh.UI;
 using Ankh.VS;
+using Microsoft.VisualStudio.Shell;
 
 namespace Ankh.Configuration
 {
@@ -470,6 +471,8 @@ namespace Ankh.Configuration
 
         public RegistryKey OpenVSInstanceKey(string name)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             RegistryKey rootKey = null;
             if (VSVersion.VS2005)
             {
@@ -514,38 +517,21 @@ namespace Ankh.Configuration
 
 		public RegistryKey OpenVSUserKey(string name)
 		{
-			RegistryKey rootKey = null;
-			if (VSVersion.VS2005)
-			{
-				ILocalRegistry3 lr3 = GetService<ILocalRegistry3>(typeof(SLocalRegistry));
+            ThreadHelper.ThrowIfNotOnUIThread();
+            IMyLocalRegistry4 lr4 = GetService<IMyLocalRegistry4>(typeof(SLocalRegistry));
 
-				if (lr3 == null)
-					return null;
+			if (lr4 == null)
+				return null;
 
-				string root;
+			uint type;
+			const uint VsLocalRegistryRootHandle_CURRENT_USER = unchecked((uint)-2147483647);
+			string root;
+			if (!VSErr.Succeeded(lr4.GetLocalRegistryRootEx(1 /* _VsLocalRegistryType.UserSettings */, out type, out root)))
+				return null;
 
-				if (!VSErr.Succeeded(lr3.GetLocalRegistryRoot(out root)))
-					return null;
+            RegistryKey rootKey = (type == VsLocalRegistryRootHandle_CURRENT_USER ? Registry.CurrentUser : Registry.LocalMachine).OpenSubKey(root);
 
-				rootKey = Registry.CurrentUser.OpenSubKey(root);
-			}
-			else
-			{
-				IMyLocalRegistry4 lr4 = GetService<IMyLocalRegistry4>(typeof(SLocalRegistry));
-
-				if (lr4 == null)
-					return null;
-
-				uint type;
-				const uint VsLocalRegistryRootHandle_CURRENT_USER = unchecked((uint)-2147483647);
-				string root;
-				if (!VSErr.Succeeded(lr4.GetLocalRegistryRootEx(1 /* _VsLocalRegistryType.UserSettings */, out type, out root)))
-					return null;
-
-				rootKey = ((type == VsLocalRegistryRootHandle_CURRENT_USER) ? Registry.CurrentUser : Registry.LocalMachine).OpenSubKey(root);
-			}
-
-			if (rootKey == null)
+            if (rootKey == null)
 				return null;
 			else if (string.IsNullOrEmpty(name))
 				return rootKey;

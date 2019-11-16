@@ -26,12 +26,13 @@ using Microsoft.Win32;
 using Ankh.Configuration;
 using Ankh.UI;
 using SharpGit;
+using Microsoft.VisualStudio.ProjectSystem;
 
 namespace Ankh.VSPackage
 {
     // This attribute is used to register the informations needed to show the this package
     // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration(null, null, null)]
+    [InstalledProductRegistration("AnkhSVN", null, "AnkhSVN")]
     [Ankh.VSPackage.Attributes.ProvideUIVersion]
     public partial class AnkhSvnPackage : IVsInstalledProduct
     {
@@ -108,16 +109,7 @@ namespace Ankh.VSPackage
 
         public int OfficialName(out string pbstrName)
         {
-            if (InCommandLineMode)
-            {
-                // We are running in /setup. The text is cached for the about box
-                pbstrName = Resources.AboutTitleNameShort;
-            }
-            else
-            {
-                // We are running with full UI. Probably used for the about box
-                pbstrName = Resources.AboutTitleName;
-            }
+            pbstrName = Resources.AboutTitleName;
             return VSErr.S_OK;
         }
 

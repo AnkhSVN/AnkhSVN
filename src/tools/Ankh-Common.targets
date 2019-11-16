@@ -39,33 +39,8 @@
   <PropertyGroup Condition="'$(UseVsSdkVersion)' == '' and '$(VisualStudioVersion)' != ''">
     <UseVsSdkVersion>$(VisualStudioVersion)</UseVsSdkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(UseVsSdkVersion)' == '8.0'">
-    <!-- Visual Studio 2005 SDK 1.1 -->
-    <MsVsShellAssembly>Microsoft.VisualStudio.Shell, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</MsVsShellAssembly>
-    <!-- Required setting for VS2005 SDK -->
-    <TargetRegistryRoot>Software\Microsoft\VisualStudio\8.0Exp</TargetRegistryRoot>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(UseVsSdkVersion)' == '9.0'">
-    <!-- Visual Studio 2008 SP1 SDK-->
-    <MsVsShellAssembly>Microsoft.VisualStudio.Shell.9.0, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</MsVsShellAssembly>
-    <TargetFrameworkVersion Condition="'$(LatestTargetFramework)' != 'true'">v2.0</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(LatestTargetFramework)' == 'true'">v3.5</TargetFrameworkVersion>
-    <!-- Older Microsoft.VsSDK.Build.Tasks.dll versions have a bug in compiling the vsct from our location -->
-    <MinVsTasksVersion>9.0.30820.0</MinVsTasksVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(UseVsSdkVersion)' == '10.0'">
-    <!-- Visual Studio 2010 (SP1) SDK -->
-    <MsVsShellAssembly>Microsoft.VisualStudio.Shell.10.0</MsVsShellAssembly>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(UseVsSdkVersion)' &gt;= '11.0'">
-    <MsVsShellAssembly>Microsoft.VisualStudio.Shell.$(UseVsSdkVersion)</MsVsShellAssembly>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(UseVsSdkVersion)' &gt;= '12.0'">v4.5.1</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(UseVsSdkVersion)' &gt;= '14.0'">v4.5.2</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(UseVsSdkVersion)' &gt;= '15.0'">v4.6</TargetFrameworkVersion>
-    <TargetFrameworkVersion Condition="'$(UseVsSdkVersion)' &gt;= '16.0'">v4.7.2</TargetFrameworkVersion>
+  <PropertyGroup>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(VisualStudioVersion)' &gt;= '10.0'">
     <LangVersion>5</LangVersion>

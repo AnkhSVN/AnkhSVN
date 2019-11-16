@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 
 using Ankh.Selection;
+using System.Threading.Tasks;
 
 namespace Ankh.Commands
 {

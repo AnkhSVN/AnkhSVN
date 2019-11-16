@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio;
 using System.Windows.Forms;
+using System.Composition;
+using Microsoft.VisualStudio.ProjectSystem;
 
 namespace Ankh.VSPackage.OptionPages
 {
@@ -82,9 +84,15 @@ namespace Ankh.VSPackage.OptionPages
 			//throw new NotImplementedException();
 		}
 
-		public int TranslateAccelerator(MSG[] pMsg)
+        [Import]
+        IProjectThreadingService ProjectThreadingService { get; set; }
+
+
+        public int TranslateAccelerator(MSG[] pMsg)
 		{
-			if (pMsg == null)
+            ProjectThreadingService.VerifyOnUIThread();
+
+            if (pMsg == null)
 				return VSErr.E_POINTER;
 
 			Message message = Message.Create(pMsg[0].hwnd, (int)pMsg[0].message, pMsg[0].wParam, pMsg[0].lParam);
@@ -113,7 +121,9 @@ namespace Ankh.VSPackage.OptionPages
 
 		void IPropertyPage2.Apply()
 		{
-			Apply();
+            ProjectThreadingService.VerifyOnUIThread();
+
+            Apply();
 		}
 
 		#endregion

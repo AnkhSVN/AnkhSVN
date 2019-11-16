@@ -37,6 +37,8 @@ using Ankh.UI.RepositoryExplorer;
 using Ankh.UI.SvnInfoGrid;
 using Ankh.UI.SvnLog;
 using Ankh.UI.WorkingCopyExplorer;
+using System.Composition;
+using Microsoft.VisualStudio.ProjectSystem;
 
 namespace Ankh.VSPackage
 {
@@ -57,6 +59,8 @@ namespace Ankh.VSPackage
     {
         public void ShowToolWindow(AnkhToolWindow window)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             ShowToolWindow(window, 0, true);
         }
 
@@ -83,6 +87,8 @@ namespace Ankh.VSPackage
 
         public void ShowToolWindow(AnkhToolWindow toolWindow, int id, bool create)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             ToolWindowPane pane = FindToolWindow(GetPaneType(toolWindow), id, create);
             
             IVsWindowFrame frame = pane.Frame as IVsWindowFrame;
@@ -96,6 +102,8 @@ namespace Ankh.VSPackage
 
         public void CloseToolWindow(AnkhToolWindow toolWindow, int id, FrameCloseMode close)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             ToolWindowPane pane = FindToolWindow(GetPaneType(toolWindow), id, false);
 
             if (pane == null)
@@ -165,9 +173,17 @@ namespace Ankh.VSPackage
             }
         }
 
+        [Import]
+        IProjectThreadingService ProjectThreadingService { get; set; }
+
         public IVsWindowFrame Frame
         {
-            get { return ((IVsWindowFrame)_pane.Frame); }
+            get 
+            {
+                ProjectThreadingService.VerifyOnUIThread();
+
+                return (IVsWindowFrame)_pane.Frame; 
+            }
         }
 
         public IVsWindowPane Pane
@@ -280,6 +296,8 @@ namespace Ankh.VSPackage
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             foreach (IOleCommandTarget target in _targets)
             {
                 int hr = target.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
@@ -298,6 +316,8 @@ namespace Ankh.VSPackage
 
         public int QueryStatus(ref Guid pguidCmdGroup, uint cCmds, OLECMD[] prgCmds, IntPtr pCmdText)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             foreach (IOleCommandTarget target in _targets)
             {
                 int hr = target.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
@@ -325,18 +345,35 @@ namespace Ankh.VSPackage
 
         public Guid KeyboardContext
         {
-            get { return GetGuid(__VSFPROPID.VSFPROPID_InheritKeyBindings); }
-            set { SetGuid(__VSFPROPID.VSFPROPID_InheritKeyBindings, value); }
+            get 
+            {
+                ProjectThreadingService.VerifyOnUIThread(); 
+                return GetGuid(__VSFPROPID.VSFPROPID_InheritKeyBindings); 
+            }
+            set 
+            {
+                ProjectThreadingService.VerifyOnUIThread();
+                SetGuid(__VSFPROPID.VSFPROPID_InheritKeyBindings, value); 
+            }
         }
 
         public Guid CommandContext
         {
-            get { return GetGuid(__VSFPROPID.VSFPROPID_CmdUIGuid); }
-            set { SetGuid(__VSFPROPID.VSFPROPID_CmdUIGuid, value); }
+            get 
+            {
+                ProjectThreadingService.VerifyOnUIThread(); 
+                return GetGuid(__VSFPROPID.VSFPROPID_CmdUIGuid); 
+            }
+            set 
+            {
+                ProjectThreadingService.VerifyOnUIThread(); 
+                SetGuid(__VSFPROPID.VSFPROPID_CmdUIGuid, value); 
+            }
         }
 
         private Guid GetGuid(__VSFPROPID id)
         {
+            ProjectThreadingService.VerifyOnUIThread();
             Guid gResult;
             if (VSErr.Succeeded(Frame.GetGuidProperty((int)id, out gResult)))
                 return gResult;
@@ -346,6 +383,7 @@ namespace Ankh.VSPackage
 
         private void SetGuid(__VSFPROPID id, Guid value)
         {
+            ProjectThreadingService.VerifyOnUIThread();
             Marshal.ThrowExceptionForHR(Frame.SetGuidProperty((int)id, ref value));
         }
 
@@ -358,6 +396,8 @@ namespace Ankh.VSPackage
         {
             get
             {
+                ProjectThreadingService.VerifyOnUIThread();
+
                 IVsWindowFrame frame = Frame;
                 if (frame != null)
                 {
@@ -497,9 +537,15 @@ namespace Ankh.VSPackage
             base.OnToolWindowCreated();
         }
 
+        [Import]
+        IProjectThreadingService ProjectThreadingService { get; set; }
+
         public override void OnToolBarAdded()
         {
             base.OnToolBarAdded();
+            
+            ProjectThreadingService.VerifyOnUIThread();
+
 
             if (ExtraToolBarId != AnkhToolBar.None)
             {
@@ -563,16 +609,22 @@ namespace Ankh.VSPackage
 
         public int OnDockableChange(int fDockable)
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             return OnDockableChange(fDockable, 0, 0, 0, 0);
         }
 
         public int OnMove()
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             return OnMove(0, 0, 0, 0);
         }
 
         public int OnSize()
         {
+            ProjectThreadingService.VerifyOnUIThread();
+
             return OnSize(0, 0, 0, 0);
         }
 

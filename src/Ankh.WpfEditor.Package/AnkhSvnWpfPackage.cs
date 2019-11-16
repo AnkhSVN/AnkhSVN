@@ -20,12 +20,12 @@ namespace Ankh.WpfPackage
     /// </summary>
     // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is
     // a package.
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Description(AnkhId.WpfPackageDescription)]
     [CLSCompliant(false)]
     [Guid(AnkhId.WpfPackageId)]
-    [ProvideAutoLoad(AnkhId.AnkhServicesAvailable)]
-    public sealed class AnkhSvnWpfPackage : Package
+    [ProvideAutoLoad(AnkhId.AnkhServicesAvailable, PackageAutoLoadFlags.BackgroundLoad)]
+    public sealed class AnkhSvnWpfPackage : AsyncPackage
     {
         /// <summary>
         /// Default constructor of the package.
@@ -38,25 +38,19 @@ namespace Ankh.WpfPackage
         {
         }
 
-
-
-        /////////////////////////////////////////////////////////////////////////////
-        // Overridden Package Implementation
-        #region Package Members
-
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
-        protected override void Initialize()
+        protected override async System.Threading.Tasks.Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            base.Initialize();
+            await base.InitializeAsync(cancellationToken, progress);
 
             AnkhRuntime runtime = null;
-            IAnkhPackage pkg = GetService(typeof(IAnkhPackage)) as IAnkhPackage;
-
-            if (pkg != null)
-                runtime = AnkhRuntime.Get(pkg);
+            var ankhPackage = await GetServiceAsync(typeof(IAnkhPackage)) as IAnkhPackage;
+            
+            if (ankhPackage != null)
+                runtime = AnkhRuntime.Get(ankhPackage);
 
             if (runtime != null)
             {
@@ -66,7 +60,5 @@ namespace Ankh.WpfPackage
             else
                 Trace.WriteLine(string.Format("Failed to initialize {0}, because the Ankh Runtime is not available", typeof(AnkhSvnWpfPackage).FullName));
         }
-        #endregion
-
     }
 }

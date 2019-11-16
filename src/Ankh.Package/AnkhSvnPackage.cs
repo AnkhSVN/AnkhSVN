@@ -33,6 +33,10 @@ using Ankh.UI;
 using Ankh.VSPackage.Attributes;
 using Ankh.Diff;
 using Ankh.GitScc;
+using Microsoft.VisualStudio.ProjectSystem;
+using System.Threading.Tasks;
+using System.ComponentModel.Composition;
+using Microsoft.VisualStudio.ComponentModelHost;
 
 namespace Ankh.VSPackage
 {
@@ -103,22 +107,10 @@ namespace Ankh.VSPackage
         /// </summary>
         protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            // The VS2005 SDK code changes the global VS UI culture, but that
-            // is not the way we should behave: We should keep the global
-            // state how VS initialized it.
-            CultureInfo uiCulture = Thread.CurrentThread.CurrentUICulture;
-            try
-            {
-                await base.InitializeAsync(cancellationToken, progress);
-            }
-            finally
-            {
-                if (Thread.CurrentThread.CurrentUICulture != uiCulture)
-                    Thread.CurrentThread.CurrentUICulture = uiCulture;
-            }
-
-            if (InCommandLineMode)
-                return; // Do nothing; speed up devenv /setup by not loading all our modules!
+            Thread.Sleep(5000);
+            
+            await JoinableTaskFactory.SwitchToMainThreadAsync();
+            GC.KeepAlive(ProjectThreadingService);
 
             try
             {
@@ -128,14 +120,16 @@ namespace Ankh.VSPackage
             {
                 new AnkhMessageBox(this).Show(Resources.DotNetTracingFails);
             }
+            //var t = typeof(Ankh.ExtensionPoints.IssueTracker.CommitArgs);
 
-            InitializeRuntime(); // Moved to function of their own to speed up devenv /setup
+            await InitializeRuntimeAsync(); // Moved to function of their own to speed up devenv /setup
             RegisterAsOleComponent();
         }
 
-        void InitializeRuntime()
+        async System.Threading.Tasks.Task InitializeRuntimeAsync()
         {
             _runtime.PreLoad();
+            await JoinableTaskFactory.SwitchToMainThreadAsync();
 
             IServiceContainer container = GetService<IServiceContainer>();
             container.AddService(typeof(IAnkhPackage), this, true);
@@ -150,15 +144,18 @@ namespace Ankh.VSPackage
 
             RegisterEditors();
 
-            NotifyLoaded(false);
+
+            
+            await NotifyLoadedAsync(false);
 
             _runtime.Start();
 
-            NotifyLoaded(true);
+            await NotifyLoadedAsync(true);
         }
 
-        private void NotifyLoaded(bool started)
+        private async System.Threading.Tasks.Task NotifyLoadedAsync(bool started)
         {
+            await JoinableTaskFactory.SwitchToMainThreadAsync();
             // We set the user context AnkhLoadCompleted active when we are loaded
             // This event can be used to trigger loading other packages that depend on AnkhSVN
             // 
@@ -166,6 +163,8 @@ namespace Ankh.VSPackage
             // [ProvideAutoLoad(AnkhId.AnkhLoadCompleted)]
             // On their package, they load automatically when we are completely loaded
             //
+
+            //ProjectThreadingService.VerifyOnUIThread();
 
             IVsMonitorSelection ms = GetService<IVsMonitorSelection>();
             if (ms != null)
@@ -193,27 +192,43 @@ namespace Ankh.VSPackage
         /// <summary>
         /// Get a boolean indicating whether we are running in commandline mode
         /// </summary>
-        public bool InCommandLineMode
+        public async Task<bool> GetInCommandLineModeAsync()
+        {
+            if (!_inCommandLineMode.HasValue)
+            {
+                await JoinableTaskFactory.SwitchToMainThreadAsync();
+                IVsShell shell = (IVsShell) await GetServiceAsync(typeof(SVsShell));
+                
+
+                if (shell == null)
+                    _inCommandLineMode = false; // Probably running in a testcase; the shell loads us!
+                else
+                {
+                    
+
+                    object value;
+                    if (VSErr.Succeeded(shell.GetProperty((int)__VSSPROPID.VSSPROPID_IsInCommandLineMode, out value)))
+                    {
+                        _inCommandLineMode = Convert.ToBoolean(value);
+                    }
+                }
+            }
+
+            return _inCommandLineMode.Value;
+        }
+
+        //[Import] 
+        //IProjectThreadingService ProjectThreadingService { get; set; }
+
+        IProjectThreadingService ProjectThreadingService
         {
             get
             {
-                if (!_inCommandLineMode.HasValue)
-                {
-                    IVsShell shell = (IVsShell)GetService(typeof(SVsShell));
-
-                    if (shell == null)
-                        _inCommandLineMode = false; // Probably running in a testcase; the shell loads us!
-                    else
-                    {
-                        object value;
-                        if (VSErr.Succeeded(shell.GetProperty((int)__VSSPROPID.VSSPROPID_IsInCommandLineMode, out value)))
-                        {
-                            _inCommandLineMode = Convert.ToBoolean(value);
-                        }
-                    }
-                }
-
-                return _inCommandLineMode.Value;
+                var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+                var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+                var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+                
+                return projectService.Services.ThreadingPolicy;
             }
         }
 
