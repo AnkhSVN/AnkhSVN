@@ -10,6 +10,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ankh.ImageCatalog</RootNamespace>
     <AssemblyName>Ankh.ImageCatalog</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +47,7 @@
       <Name>Ankh.Ids</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <XslSource Include="Images.xml">
       <Transform>CreateImageManifest.xsl</Transform>
       <To>$(IntermediateOutputPath)Ankh.imagemanifest</To>
@@ -53,7 +55,7 @@
       </Variables>
       <SubType>Designer</SubType>
     </XslSource>
-  </ItemGroup>
+  </ItemGroup> -->
   <ItemGroup>
     <None Include="Ankh.ImageCatalog.snk" />
     <None Include="Images.xsd">
@@ -71,21 +73,21 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\tools\turtletasks\QQn.TurtleTasks.targets" />
-  <PropertyGroup>
+  <!-- <Import Project="..\tools\turtletasks\QQn.TurtleTasks.targets" /> -->
+  <!-- <PropertyGroup>
     <GetCopyToOutputDirectoryItemsDependsOn>
       $(GetCopyToOutputDirectoryItemsDependsOn);
       GetImageCatalogTargetItems;
     </GetCopyToOutputDirectoryItemsDependsOn>
-  </PropertyGroup>
-  <Target Name="GetImageCatalogTargetItems">
+  </PropertyGroup> -->
+  <!-- <Target Name="GetImageCatalogTargetItems">
     <ItemGroup>
       <AllItemsFullPathWithTargetPath Include="$(IntermediateOutputPath)Ankh.imagemanifest" />
       <_SourceItemsToCopyToOutputDirectory Include="$(IntermediateOutputPath)Ankh.imagemanifest">
         <TargetPath>Ankh.imagemanifest</TargetPath>
       </_SourceItemsToCopyToOutputDirectory>
     </ItemGroup>
-  </Target>
+  </Target> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

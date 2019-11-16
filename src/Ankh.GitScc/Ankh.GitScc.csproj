@@ -75,12 +75,14 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\Ankh.VS.VersionThunk\Embed\Microsoft.VisualStudio.Shell.Embeddable.dll</HintPath>
     </Reference>
-    <Reference Include="SharpGit">
-      <HintPath>..\autolib\SharpGit\SharpGit.dll</HintPath>
+    <Reference Include="SharpGit, Version=0.2401.1116.230, Culture=neutral, PublicKeyToken=bbd5cbe025856bdf, processorArchitecture=x86">
+      <HintPath>..\packages\SharpGit-x86.0.2401.1116.230\lib\net40\SharpGit.dll</HintPath>
     </Reference>
-    <Reference Include="SharpSvn, Version=1.4999.384.29813, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\autolib\SharpSvn\SharpSvn.dll</HintPath>
+    <Reference Include="SharpSvn, Version=1.9007.3987.251, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
+      <HintPath>..\packages\SharpSvn.1.9-x86.1.9007.3987.251\lib\net40\SharpSvn.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSvn.UI, Version=1.9007.3987.251, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSvn.1.9-x86.1.9007.3987.251\lib\net40\SharpSvn.UI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -121,6 +123,7 @@
     <None Include="Ankh.GitScc.wxs">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
