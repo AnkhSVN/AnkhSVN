@@ -23,6 +23,7 @@
     <SccProvider>SubversionScc</SccProvider>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
