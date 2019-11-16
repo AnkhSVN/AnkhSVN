@@ -1,0 +1,14 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: warrenbuckley/Setup-MSBuild@v1
+    - name: MSBuild
+      working-directory: src
+      run: msbuild AnkhSvn.sln
