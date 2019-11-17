@@ -16,4 +16,4 @@ jobs:
       run: nuget restore AnkhSvn.sln
     - name: MSBuild
       working-directory: src
-      run: msbuild AnkhSvn.sln
+      run: msbuild AnkhSvn.sln -verbosity:quiet
