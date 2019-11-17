@@ -19,8 +19,9 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VsSDK.IntegrationTestLibrary;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
 using EnvDTE;
+using AnkhSvn_IntegrationTestProject;
+using Microsoft.VisualStudio.TestTools.VsIdeTesting;
 
 namespace IntegrationTests
 {

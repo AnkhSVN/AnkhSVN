@@ -19,11 +19,10 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
 using EnvDTE;
 using System.IO;
 using Microsoft.VsSDK.IntegrationTestLibrary;
-
+using AnkhSvn_IntegrationTestProject;
 
 namespace IntegrationTests
 {

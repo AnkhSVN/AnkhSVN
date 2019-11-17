@@ -49,9 +49,12 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml"/>
+    <Reference Include="System.Xml" />
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.202" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.3.2099" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.5.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <ProjectReference Include="..\Ankh.Diff\Ankh.Diff.csproj">
       <Project>{62F97060-6A9E-477D-B15B-E1A1F5320039}</Project>
       <Name>Ankh.Diff</Name>

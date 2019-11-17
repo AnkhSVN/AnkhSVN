@@ -17,11 +17,12 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using AnkhSvn_IntegrationTestProject;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.VsIdeTesting;
 using Microsoft.VsSDK.IntegrationTestLibrary;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
 
 namespace IntegrationTests
 {

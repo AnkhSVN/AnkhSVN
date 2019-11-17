@@ -18,11 +18,12 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VSSDK.Tools.VsIdeTesting;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 using EnvDTE;
 using Ankh;
+using AnkhSvn_IntegrationTestProject;
+using Microsoft.VisualStudio.TestTools.VsIdeTesting;
 
 namespace IntegrationTestProject
 {
