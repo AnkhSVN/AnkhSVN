@@ -1,0 +1,3 @@
+files:
+  - source: src/**/*.resx
+    translation: '%file_name%.%two_letters_code%.%file_extension%'
