@@ -292,7 +292,6 @@
   <ItemGroup>
     <None Include="Ankh.Services.snk" />
     <Compile Include="Scc\Engine\SccItem.LongPath.cs" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ankh.Services.wxs" />
