@@ -112,54 +112,13 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutDetails" xml:space="preserve">
-    <value>AnkhSVN - Subversion Support for Visual Studio {0} 
- * Ankh.Package {1}
- * Subversion {2} via SharpSvn {3}
- * Git/LibGit2 {4} via SharpGit {5}</value>
-  </data>
-  <data name="AboutLinkedTo" xml:space="preserve">
-    <value>{0} is linked to: </value>
-  </data>
-  <data name="AboutOptionallyLinkedTo" xml:space="preserve">
-    <value>{0} is optionally linked to: </value>
-  </data>
-  <data name="AboutProductId" xml:space="preserve">
-    <value>{0}</value>
-  </data>
-  <data name="AboutTitleName" xml:space="preserve">
-    <value>AnkhSVN - Subversion Support for Visual Studio</value>
-  </data>
-  <data name="AboutTitleNameShort" xml:space="preserve">
-    <value>AnkhSVN - Subversion Support</value>
-  </data>
-  <data name="AddToSubversionCommandName" xml:space="preserve">
-    <value>Add to Sub&amp;version</value>
-  </data>
-  <data name="DiffToolWindowTitle" xml:space="preserve">
-    <value>Diff</value>
-  </data>
-  <data name="DotNetTracingFails" xml:space="preserve">
-    <value>The .Net Trace handling fails. Please check your .Net machine and enterprise configuration</value>
-  </data>
-  <data name="LogToolWindowTitle" xml:space="preserve">
-    <value>History Viewer</value>
-  </data>
-  <data name="PendingChangesToolWindowTitle" xml:space="preserve">
-    <value>Pending Changes</value>
-  </data>
-  <data name="RepositoryExplorerToolWindowTitle" xml:space="preserve">
-    <value>Repository Explorer</value>
-  </data>
-  <data name="SccInfoToolWindowTitle" xml:space="preserve">
-    <value>Source Control Info</value>
-  </data>
-  <data name="WorkingCopyExplorerToolWindowTitle" xml:space="preserve">
-    <value>Working Copy Explorer</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  <data name="Busy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Busy.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
