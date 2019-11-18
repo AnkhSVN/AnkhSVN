@@ -107,10 +107,10 @@ namespace Ankh.VSPackage
         /// </summary>
         protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
             
             await JoinableTaskFactory.SwitchToMainThreadAsync();
-            GC.KeepAlive(ProjectThreadingService);
+            //GC.KeepAlive(ProjectThreadingService);
 
             try
             {
@@ -129,7 +129,7 @@ namespace Ankh.VSPackage
         async System.Threading.Tasks.Task InitializeRuntimeAsync()
         {
             _runtime.PreLoad();
-            await JoinableTaskFactory.SwitchToMainThreadAsync();
+            
 
             IServiceContainer container = GetService<IServiceContainer>();
             container.AddService(typeof(IAnkhPackage), this, true);
@@ -216,19 +216,15 @@ namespace Ankh.VSPackage
 
             return _inCommandLineMode.Value;
         }
-
-        //[Import] 
-        //IProjectThreadingService ProjectThreadingService { get; set; }
-
-        IProjectThreadingService ProjectThreadingService
+        IProjectService ProjectService
         {
             get
             {
                 var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
                 var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
                 var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
-                
-                return projectService.Services.ThreadingPolicy;
+
+                return projectService;
             }
         }
 

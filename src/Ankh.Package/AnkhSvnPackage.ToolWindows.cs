@@ -39,6 +39,8 @@ using Ankh.UI.SvnLog;
 using Ankh.UI.WorkingCopyExplorer;
 using System.Composition;
 using Microsoft.VisualStudio.ProjectSystem;
+using Microsoft.VisualStudio.ComponentModelHost;
+using Microsoft.VisualStudio.Threading;
 
 namespace Ankh.VSPackage
 {
@@ -59,7 +61,11 @@ namespace Ankh.VSPackage
     {
         public void ShowToolWindow(AnkhToolWindow window)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             ShowToolWindow(window, 0, true);
         }
@@ -87,7 +93,11 @@ namespace Ankh.VSPackage
 
         public void ShowToolWindow(AnkhToolWindow toolWindow, int id, bool create)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             ToolWindowPane pane = FindToolWindow(GetPaneType(toolWindow), id, create);
             
@@ -102,7 +112,11 @@ namespace Ankh.VSPackage
 
         public void CloseToolWindow(AnkhToolWindow toolWindow, int id, FrameCloseMode close)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             ToolWindowPane pane = FindToolWindow(GetPaneType(toolWindow), id, false);
 
@@ -180,7 +194,7 @@ namespace Ankh.VSPackage
         {
             get 
             {
-                ProjectThreadingService.VerifyOnUIThread();
+                //ProjectThreadingService.VerifyOnUIThread();
 
                 return (IVsWindowFrame)_pane.Frame; 
             }
@@ -296,7 +310,7 @@ namespace Ankh.VSPackage
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
 
             foreach (IOleCommandTarget target in _targets)
             {
@@ -316,7 +330,7 @@ namespace Ankh.VSPackage
 
         public int QueryStatus(ref Guid pguidCmdGroup, uint cCmds, OLECMD[] prgCmds, IntPtr pCmdText)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
 
             foreach (IOleCommandTarget target in _targets)
             {
@@ -347,12 +361,12 @@ namespace Ankh.VSPackage
         {
             get 
             {
-                ProjectThreadingService.VerifyOnUIThread(); 
+                //ProjectThreadingService.VerifyOnUIThread(); 
                 return GetGuid(__VSFPROPID.VSFPROPID_InheritKeyBindings); 
             }
             set 
             {
-                ProjectThreadingService.VerifyOnUIThread();
+                //ProjectThreadingService.VerifyOnUIThread();
                 SetGuid(__VSFPROPID.VSFPROPID_InheritKeyBindings, value); 
             }
         }
@@ -361,19 +375,19 @@ namespace Ankh.VSPackage
         {
             get 
             {
-                ProjectThreadingService.VerifyOnUIThread(); 
+                //ProjectThreadingService.VerifyOnUIThread(); 
                 return GetGuid(__VSFPROPID.VSFPROPID_CmdUIGuid); 
             }
             set 
             {
-                ProjectThreadingService.VerifyOnUIThread(); 
+                //ProjectThreadingService.VerifyOnUIThread(); 
                 SetGuid(__VSFPROPID.VSFPROPID_CmdUIGuid, value); 
             }
         }
 
         private Guid GetGuid(__VSFPROPID id)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
             Guid gResult;
             if (VSErr.Succeeded(Frame.GetGuidProperty((int)id, out gResult)))
                 return gResult;
@@ -383,7 +397,7 @@ namespace Ankh.VSPackage
 
         private void SetGuid(__VSFPROPID id, Guid value)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
             Marshal.ThrowExceptionForHR(Frame.SetGuidProperty((int)id, ref value));
         }
 
@@ -396,7 +410,7 @@ namespace Ankh.VSPackage
         {
             get
             {
-                ProjectThreadingService.VerifyOnUIThread();
+                //ProjectThreadingService.VerifyOnUIThread();
 
                 IVsWindowFrame frame = Frame;
                 if (frame != null)
@@ -537,15 +551,27 @@ namespace Ankh.VSPackage
             base.OnToolWindowCreated();
         }
 
-        [Import]
-        IProjectThreadingService ProjectThreadingService { get; set; }
+        IProjectService ProjectService
+        {
+            get
+            {
+                var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+                var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+                var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+                return projectService;
+            }
+        }
 
         public override void OnToolBarAdded()
         {
             base.OnToolBarAdded();
-            
-            ProjectThreadingService.VerifyOnUIThread();
 
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             if (ExtraToolBarId != AnkhToolBar.None)
             {
@@ -609,21 +635,33 @@ namespace Ankh.VSPackage
 
         public int OnDockableChange(int fDockable)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             return OnDockableChange(fDockable, 0, 0, 0, 0);
         }
 
         public int OnMove()
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             return OnMove(0, 0, 0, 0);
         }
 
         public int OnSize()
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             return OnSize(0, 0, 0, 0);
         }

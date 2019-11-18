@@ -90,7 +90,7 @@ namespace Ankh.VSPackage.OptionPages
 
         public int TranslateAccelerator(MSG[] pMsg)
 		{
-            ProjectThreadingService.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
 
             if (pMsg == null)
 				return VSErr.E_POINTER;
@@ -121,7 +121,7 @@ namespace Ankh.VSPackage.OptionPages
 
 		void IPropertyPage2.Apply()
 		{
-            ProjectThreadingService.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
 
             Apply();
 		}

@@ -1,0 +1,44 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable">
+  <Commands>
+    <Menus>
+      <Menu id="Menu_FileScc" priority="0x0100" guid="ankhMenu_FileScc">
+        <Parent guid="guidSHLMainMenu"
+                id="IDM_VS_MENU_FILE"/>
+        <Strings>
+          <ButtonText>Subve&amp;rsion</ButtonText>
+          <CommandName>SvnMenu</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+    <Groups>
+      <Group guid="a" id="a">
+        <Parent id="Menu_FileScc" guid="ankhMenu_FileScc"/>
+      </Group>
+    </Groups>
+    <Buttons>
+      <
+    </Buttons>
+    <Bitmaps>
+      
+    </Bitmaps>
+    <Combos>
+      
+    </Combos>
+  </Commands>
+  <CommandPlacements>
+    
+  </CommandPlacements>
+  <VisibilityConstraints>
+    
+  </VisibilityConstraints>
+  <KeyBindings>
+    
+  </KeyBindings>
+  <UsedCommands>
+    
+  </UsedCommands>
+  <Symbols>
+    
+  </Symbols>
+</CommandTable>

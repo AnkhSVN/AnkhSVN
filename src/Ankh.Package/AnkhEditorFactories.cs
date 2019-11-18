@@ -165,7 +165,7 @@ namespace Ankh.VSPackage
                 return VSErr.E_UNEXPECTED;
             }
 
-            GetService<IProjectThreadingService>().VerifyOnUIThread();
+            //GetService<IProjectThreadingService>().VerifyOnUIThread();
 
             return base.CreateEditorInstance(grfCreateDoc, pszMkDocument, pszPhysicalView, pvHier, itemid, punkDocDataExisting, out ppunkDocView, out ppunkDocData, out pbstrEditorCaption, out pguidCmdUI, out pgrfCDW);
         }

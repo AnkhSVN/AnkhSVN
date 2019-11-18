@@ -24,6 +24,8 @@ using Ankh.Scc;
 using Ankh.Scc.Native;
 using Ankh.VS;
 using Ankh.VSPackage.Attributes;
+using Microsoft.VisualStudio.ComponentModelHost;
+using Microsoft.VisualStudio.ProjectSystem;
 
 namespace Ankh.VSPackage
 {
@@ -102,7 +104,11 @@ namespace Ankh.VSPackage
 
         public int SaveSolutionProps(IVsHierarchy pHierarchy, IVsSolutionPersistence pPersistence)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             try
             {
@@ -234,7 +240,11 @@ namespace Ankh.VSPackage
 
         public int LoadUserOptions(IVsSolutionPersistence pPersistence, uint grfLoadOpts)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             if ((grfLoadOpts & (uint)__VSLOADUSEROPTS.LUO_OPENEDDSW) != 0)
             {
@@ -267,7 +277,12 @@ namespace Ankh.VSPackage
 
         public bool ForceLoadUserSettings(string streamName)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
+            //ProjectThreadingService.VerifyOnUIThread();
 
             IVsSolutionPersistence persistence = GetService<IVsSolutionPersistence>(typeof(SVsSolutionPersistence));
             if (persistence == null)
@@ -345,7 +360,11 @@ namespace Ankh.VSPackage
 
         public int SaveUserOptions([In] IVsSolutionPersistence pPersistence)
         {
-            ProjectThreadingService.VerifyOnUIThread();
+            var componentModel = (IComponentModel)GetService(typeof(SComponentModel));
+            var projectServiceAccessor = componentModel.GetService<IProjectServiceAccessor>();
+            var projectService = projectServiceAccessor.GetProjectService(ProjectServiceThreadingModel.Multithreaded);
+
+            //projectService.Services.ThreadingPolicy.VerifyOnUIThread();
 
             try
             {
