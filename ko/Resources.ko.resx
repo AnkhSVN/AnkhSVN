@@ -117,61 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddToSubversionCommandName" xml:space="preserve">
-    <value>Add to Sub&amp;version</value>
-  </data>
-  <data name="CheckingOutProject" xml:space="preserve">
-    <value>Checking Out Project</value>
-  </data>
-  <data name="MergeCompleted" xml:space="preserve">
-    <value>File Merge Completed?</value>
-  </data>
-  <data name="PathXBlocked" xml:space="preserve">
-    <value>The path '{0}' is currently blocked by subversion; do you have a file with a case-only-different name?</value>
-  </data>
-  <data name="SvnPathXBlocked" xml:space="preserve">
-    <value>The path '{0}' is in a subversion administrative area. This file shouldn't be added to subversion.</value>
-  </data>
-  <data name="ToolTipConflict" xml:space="preserve">
-    <value>This file is marked as Conflicted.</value>
-  </data>
-  <data name="ToolTipDirObstructed" xml:space="preserve">
-    <value>This directory does not exist on disk. Instead there is a file with the same name</value>
-  </data>
-  <data name="ToolTipDoesNotExist" xml:space="preserve">
-    <value>This file does not exist on disk.</value>
-  </data>
-  <data name="ToolTipFileObstructed" xml:space="preserve">
-    <value>This file does not exist on disk. Instead there is a directory with the same name</value>
-  </data>
-  <data name="ToolTipIgnored" xml:space="preserve">
-    <value>This file is explicitly ignored by subversion.</value>
-  </data>
-  <data name="ToolTipLocked" xml:space="preserve">
-    <value>You have exclusively locked this file.</value>
-  </data>
-  <data name="ToolTipModified" xml:space="preserve">
-    <value>This file is modified</value>
-  </data>
-  <data name="ToolTipMustLock" xml:space="preserve">
-    <value>This file must be locked before it can be edited.</value>
-  </data>
-  <data name="UnsupportedWorkingCopyFound" xml:space="preserve">
-    <value>Subversion detected an unsupported working copy version while checking the status of '{0}'. Most likely you upgraded another Subversion client (e.g. TortoiseSVN or the SVN client) to a newer version without upgrading your AnkhSVN. Please visit http://ankhsvn.net/ to find out about newer AnkhSVN versions supporting this Working Copy.
-
-Most likely AnkhSVN will not work correctly on this and other upgraded working copies until you upgrade to a newer version.</value>
-  </data>
-  <data name="UpgradeRequired" xml:space="preserve">
-    <value>Subversion detected a working copy that needs an explicit upgrade in '{0}'. 
-
-While this working copy is not upgraded all files in this working copy will appear as new. 
-
-When a working copy is upgraded it can no longer be used by Subversion clients that weren't designed for this (or later) working copy formats.
-
-Further working copy upgrade required warnings are suppressed until after you restart Visual Studio or upgrade a working copy.</value>
-  </data>
-  <data name="YourMergeToolSavedXWouldYouLikeItMarkedAsResolved" xml:space="preserve">
-    <value>Your external merge tool saved '{0}'.
-Would you like to mark this conflicted file as resolved?</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  <data name="Busy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Busy.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
